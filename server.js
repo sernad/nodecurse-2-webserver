@@ -8,22 +8,21 @@ hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
-app.use((req, res, next) => {
+app.use((req,res,next) => {
   var now = new Date().toString();
-  var log = `${now}: ${req.method} ${req.url}`;
-
+  var log = `${now} ${req.method} ${req.url}`;
   console.log(log);
-  fs.appendFile('server.log', log + '\n');
+  fs.appendFile('server.log', log + '\n',(err) => {
+    if (err) {
+      console.log("Problema para establecer conexion");
+    }
+  } );
   next();
 });
 
 // app.use((req,res) => {
 //   res.render('mantenimiento.hbs');
 // });
-
-// Challenge
-// view maintainance.hbs from home.hbs (will be right back)
-// render inside middleware
 
 
 hbs.registerHelper('getCurrentYear', () => {
@@ -39,6 +38,12 @@ app.get('/', (req, res) => {
     pageTitle: 'Home Page',
     welcomeMessage: 'Welcome to my website'
   });
+});
+
+app.get("/projects",(req,res) => {
+  res.render("projects.hbs",{
+    pageTitle: "Proyectos"
+  })
 });
 
 
