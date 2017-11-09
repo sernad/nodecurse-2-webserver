@@ -17,9 +17,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req,res) => {
-  res.render('mantenimiento.hbs');
-});
+// app.use((req,res) => {
+//   res.render('mantenimiento.hbs');
+// });
 
 // Challenge
 // view maintainance.hbs from home.hbs (will be right back)
